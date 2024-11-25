@@ -1,0 +1,289 @@
+                                                                      banking project sql script 
+
+Database Structure :
+database name pk :
+
+Tables:
+
+1. Customers Table:
+
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Age INT,
+    Income DECIMAL(10, 2),
+    ContactNumber VARCHAR(15),
+    Address VARCHAR(255)
+);
+
+-- Inserting 10 sample records
+INSERT INTO Customers (CustomerID, Name, Age, Income, ContactNumber, Address)
+VALUES
+(1, 'Amit Sharma', 35, 80000.00, '9876543210', 'Mumbai'),
+(2, 'Ravi Kumar', 42, 95000.00, '9876543211', 'Delhi'),
+(3, 'Priya Singh', 29, 65000.00, '9876543212', 'Bangalore'),
+(4, 'Sunil Yadav', 55, 120000.00, '9876543213', 'Chennai'),
+(5, 'Neha Patel', 38, 70000.00, '9876543214', 'Ahmedabad'),
+(6, 'Rani Verma', 30, 50000.00, '9876543215', 'Kolkata'),
+(7, 'Manoj Gupta', 45, 110000.00, '9876543216', 'Hyderabad'),
+(8, 'Sneha Reddy', 28, 75000.00, '9876543217', 'Pune'),
+(9, 'Vikas Agarwal', 50, 95000.00, '9876543218', 'Lucknow'),
+(10, 'Sonia Joshi', 34, 85000.00, '9876543219', 'Mumbai');
+
+2. Accounts Table:
+
+CREATE TABLE Accounts (
+    AccountID INT PRIMARY KEY,
+    CustomerID INT,
+    AccountType VARCHAR(50),
+    Balance DECIMAL(10, 2),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+-- Inserting 10 sample records
+INSERT INTO Accounts (AccountID, CustomerID, AccountType, Balance)
+VALUES
+(1, 1, 'Savings', 50000.00),
+(2, 2, 'Current', 120000.00),
+(3, 3, 'Savings', 45000.00),
+(4, 4, 'Fixed Deposit', 200000.00),
+(5, 5, 'Savings', 70000.00),
+(6, 6, 'Current', 80000.00),
+(7, 7, 'Savings', 30000.00),
+(8, 8, 'Current', 100000.00),
+(9, 9, 'Fixed Deposit', 150000.00),
+(10, 10, 'Savings', 55000.00);
+
+3. Transactions Table:
+
+CREATE TABLE Transactions (
+    TransactionID INT PRIMARY KEY,
+    AccountID INT,
+    TransactionDate DATE,
+    Amount DECIMAL(10, 2),
+    TransactionType VARCHAR(50),
+    FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
+);
+
+-- Inserting 10 sample records
+INSERT INTO Transactions (TransactionID, AccountID, TransactionDate, Amount, TransactionType)
+VALUES
+(1, 1, '2024-11-01', 5000.00, 'Deposit'),
+(2, 2, '2024-11-02', 10000.00, 'Withdrawal'),
+(3, 3, '2024-11-03', 2000.00, 'Deposit'),
+(4, 4, '2024-11-04', 15000.00, 'Transfer'),
+(5, 5, '2024-11-05', 5000.00, 'Withdrawal'),
+(6, 6, '2024-11-06', 12000.00, 'Deposit'),
+(7, 7, '2024-11-07', 8000.00, 'Transfer'),
+(8, 8, '2024-11-08', 15000.00, 'Deposit'),
+(9, 9, '2024-11-09', 10000.00, 'Withdrawal'),
+(10, 10, '2024-11-10', 3000.00, 'Transfer');
+
+4. Loans Table:
+
+CREATE TABLE Loans (
+    LoanID INT PRIMARY KEY,
+    CustomerID INT,
+    LoanAmount DECIMAL(10, 2),
+    InterestRate DECIMAL(5, 2),
+    LoanStartDate DATE,
+    LoanStatus VARCHAR(50),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+-- Inserting 10 sample records
+INSERT INTO Loans (LoanID, CustomerID, LoanAmount, InterestRate, LoanStartDate, LoanStatus)
+VALUES
+(1, 1, 100000.00, 7.5, '2022-01-15', 'Active'),
+(2, 2, 200000.00, 8.0, '2023-03-12', 'Pending'),
+(3, 3, 50000.00, 7.0, '2022-06-10', 'Active'),
+(4, 4, 300000.00, 6.5, '2021-07-01', 'Closed'),
+(5, 5, 120000.00, 9.0, '2022-09-15', 'Active'),
+(6, 6, 75000.00, 7.2, '2023-02-05', 'Pending'),
+(7, 7, 150000.00, 7.8, '2023-05-18', 'Active'),
+(8, 8, 200000.00, 8.5, '2022-10-10', 'Closed'),
+(9, 9, 250000.00, 7.0, '2021-12-20', 'Active'),
+(10, 10, 50000.00, 7.4, '2023-07-01', 'Active');
+
+5. ATM Table:
+
+CREATE TABLE ATMs (
+    ATMID INT PRIMARY KEY,
+    Location VARCHAR(100),
+    CashAvailable DECIMAL(10, 2),
+    TransactionsProcessed INT
+);
+
+-- Inserting 10 sample records
+INSERT INTO ATMs (ATMID, Location, CashAvailable, TransactionsProcessed)
+VALUES
+(1, 'Mumbai', 500000.00, 150),
+(2, 'Delhi', 300000.00, 200),
+(3, 'Bangalore', 400000.00, 180),
+(4, 'Chennai', 250000.00, 120),
+(5, 'Ahmedabad', 600000.00, 250),
+(6, 'Kolkata', 350000.00, 160),
+(7, 'Hyderabad', 550000.00, 220),
+(8, 'Pune', 450000.00, 210),
+(9, 'Lucknow', 700000.00, 300),
+(10, 'Mumbai', 650000.00, 270);
+
+6. Customer_Support Table:
+
+CREATE TABLE Customer_Support (
+    SupportTicketID INT PRIMARY KEY,
+    CustomerID INT,
+    IssueDate DATE,
+    IssueDescription TEXT,
+    ResolutionStatus VARCHAR(50),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+-- Inserting 10 sample records
+INSERT INTO Customer_Support (SupportTicketID, CustomerID, IssueDate, IssueDescription, ResolutionStatus)
+VALUES
+(1, 1, '2024-11-01', 'Unable to withdraw money from ATM', 'Resolved'),
+(2, 2, '2024-11-02', 'Account balance not updating', 'Pending'),
+(3, 3, '2024-11-03', 'Loan application issue', 'Resolved'),
+(4, 4, '2024-11-04', 'Incorrect interest rate applied', 'Pending'),
+(5, 5, '2024-11-05', 'Fraudulent transaction detected', 'Resolved'),
+(6, 6, '2024-11-06', 'Account frozen due to suspicious activity', 'Resolved'),
+(7, 7, '2024-11-07', 'ATM card not working', 'Pending'),
+(8, 8, '2024-11-08', 'Transfer limit exceeded', 'Resolved'),
+(9, 9, '2024-11-09', 'Incorrect loan repayment schedule', 'Pending'),
+(10, 10, '2024-11-10', 'Blocked account due to security reasons', 'Resolved');
+
+
+problems faced in banking :
+
+
+1. Fraud Detection
+Problem: Identifying fraudulent transactions among millions of records.
+SQL Task: Write queries to detect unusual transaction patterns (e.g., transactions above a certain threshold).
+
+-- Detect transactions exceeding ₹50,000 (considered potentially fraudulent)
+Query :
+
+SELECT * FROM Transactions
+WHERE Amount > 50000;
+
+
+2. Customer Segmentation
+Problem: Categorizing customers based on account balances or income.
+SQL Task: Group customers by income level or spending habits.
+
+-- Group customers by income range
+Query :
+
+SELECT Name, Income,
+    CASE
+        WHEN Income < 50000 THEN 'Low'
+        WHEN Income BETWEEN 50000 AND 100000 THEN 'Medium'
+        ELSE 'High'
+    END AS IncomeLevel
+FROM Customers;
+
+
+3. Loan Management
+Problem: Tracking overdue loans or calculating interest on active loans.
+SQL Task: Query overdue payments or generate monthly repayment schedules.
+
+-- Find active loans with outstanding amount
+Query :
+
+SELECT LoanID, Name, LoanAmount, LoanStartDate
+FROM Loans
+JOIN Customers ON Loans.CustomerID = Customers.CustomerID
+WHERE LoanStatus = 'Active';
+
+
+4. Account Balances and Transactions
+Problem: Managing real-time updates to balances after deposits, withdrawals, or transfers.
+SQL Task: Automate balance updates using triggers.
+
+-- Example: Create trigger to update account balance after a deposit
+Query :
+
+CREATE TRIGGER UpdateBalanceAfterDeposit
+AFTER INSERT ON Transactions
+FOR EACH ROW
+BEGIN
+    UPDATE Accounts
+    SET Balance = Balance + NEW.Amount
+    WHERE AccountID = NEW.AccountID AND NEW.TransactionType = 'Deposit';
+END;
+
+
+5. Regulatory Reporting
+Problem: Generating reports for compliance with financial regulations.
+SQL Task: Aggregate data to show transaction volumes or customer account details.
+
+-- Generate a summary of the total transactions for each account
+Query :
+
+SELECT AccountID, SUM(Amount) AS TotalTransactions
+FROM Transactions
+GROUP BY AccountID;
+
+
+6. Customer Support Insights
+Problem: Resolving customer complaints and tracking service requests.
+SQL Task: Store and query support tickets for analysis.
+
+-- Query all unresolved support tickets
+Query :
+
+SELECT * FROM Customer_Support
+WHERE ResolutionStatus = 'Pending';
+
+
+7. ATM Management
+Problem: Ensuring ATMs have sufficient cash and analyzing withdrawal patterns.
+SQL Task: Track ATM transactions and calculate cash levels.
+
+-- Query ATM transaction volume and cash status
+Query :
+
+SELECT ATMID, Location, CashAvailable, SUM(Amount) AS TotalWithdrawn
+FROM ATMs
+JOIN Transactions ON ATMs.ATMID = Transactions.TransactionID
+WHERE Transactions.TransactionType = 'Withdrawal'
+GROUP BY ATMID;
+
+
+8. Data Security and Privacy
+Problem: Preventing unauthorized access and masking sensitive data.
+SQL Task: Use views or restricted access queries for secure reporting.
+
+-- Create a view to show customer names and balances, without exposing full details
+Query :
+
+CREATE VIEW CustomerSecureView AS
+SELECT Name, Balance
+FROM Customers
+JOIN Accounts ON Customers.CustomerID = Accounts.CustomerID;
+
+
+9. Revenue Analysis
+Problem: Analyzing interest income or fees collected from services.
+SQL Task: Write queries to calculate monthly or annual revenue.
+
+-- Calculate total loan interest income for the year
+Query :
+
+SELECT SUM(LoanAmount * InterestRate / 100) AS TotalInterestIncome
+FROM Loans
+WHERE LoanStatus = 'Active' AND YEAR(LoanStartDate) = 2024;
+
+
+10. Cross-Selling Opportunities
+Problem: Identifying customers for targeted offers (e.g., loans, credit cards).
+SQL Task: Query customers with specific criteria for marketing campaigns.
+
+-- Find customers with high income and active loans for a cross-selling campaign
+Query :
+
+SELECT Name, Income
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+WHERE Income > 100000 AND LoanStatus = 'Active';
